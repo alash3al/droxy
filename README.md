@@ -37,4 +37,4 @@ $ droxy &
 $ docker run --name example2.localhost -d -p 8081:81 -v /some/content:/usr/share/nginx/html:ro -d nginx
 $ curl localhost -H "Host: example2.localhost:81"
 ```
-** any error will break the request and returns 503
+** any error will break the request and return 503
