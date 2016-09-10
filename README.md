@@ -31,7 +31,7 @@ $ docker run --name example1.localhost -d -p 8080:80 -v /some/content:/usr/share
 $ curl localhost -H "Host: example1.localhost"
 ```
 
-> or it will allows you to change that policy to search for the port that maps to the private {Port In `Host` Header}  
+> or it will allow you to change that policy to search for the port that maps to the private {Port In `Host` Header}  
 ```bash
 $ droxy &
 $ docker run --name example2.localhost -d -p 8081:81 -v /some/content:/usr/share/nginx/html:ro -d nginx
