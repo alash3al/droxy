@@ -1,40 +1,43 @@
 # Droxy
-a transparent standalone http reverse proxy for docker containers .
+A transparent standalone http reverse proxy for docker containers .
 
-# Installation
-```bash
-$ go get github.com/alash3al/droxy
-$ go install github.com/alash3al/droxy
-```
+# Download
+- For [Windows 64bit](https://droxy.alash3al.xyz/dl/v2/windows/droxy.exe) or [Linux 64bit](https://droxy.alash3al.xyz/dl/v2/linux/droxy) .
+- Then open your `terminal` or `CMD` .
 
 # Usage
-- create a simple docker app that listens on any port i.e `-p 8001:80`
-- give it a name `--name=container1.domain.com`
-- now after mapping the domain name of `container1.domain.com` to the main server ip address, you can call it to see its response .
-
-# Help
+To run it, just run the downloaded binary as it !
 ```bash
-alash3al@laptop:~$ droxy --help
-Usage of droxy:
-  -addr string
-    	the listen-address to serve the request (default ":80")
-  -docker string
-    	the docker socket path (default "unix:///var/run/docker.sock")
-
+# type ./droxy for linux or ./droxy.exe for windows
+$ ./droxy
 ```
 
-# Examples
-> droxy will first search for the public container port that maps to the private "80" port  
+Then You need to run any container(s), for examples, we will use the default nginx container.
 ```bash
-$ droxy &
-$ docker run --name example1.localhost -d -p 8080:80 -v /some/content:/usr/share/nginx/html:ro -d nginx
-$ curl localhost -H "Host: example1.localhost"
+docker run --name service1 -v /var/www/:/usr/share/nginx/html:ro -d -p 8081:80 -e DROXY_HOST=service1.mysite.com -e DROXY_LETSENCRYPT=service1.mysite.com nginx
 ```
+now open `service1.mysite.com` which maps to your server's ip, you will see the nginx service .
 
-> or it will allow you to change that policy to search for the port that maps to the private {Port In `Host` Header}  
+
+What is `DROXY_HOST` and `DROXY_LETSENCRYPT` ?
+- `DROXY_HOST` tells droxy to route all requests that match `DROXY_HOST` to this container . 
+- `DROXY_LETSENCRYPT` tells droxy to enable auto ssl based on Let'sEncrypt for this container and that hostname .
+
+# Features
+- No Dependencies, just a small single binary ! .
+- Watches docker in realtime and add/remove containers from our own internal service discovery .
+- Automatically generate and renew SSL Certs for created containers .
+- Single and Multiple Hosts allowed for both `DROXY_HOST` and `DROXY_LETSENCRYPT`
+- You can specifiy whether to use `http` or `https` when connecting with the backend `DROXY_HOST=host1.com,https://host2.com`.
+- You can choose the backend port (docker private port) to be used for each hostname `DROXY_HOST=host1.com,host2.com:8080`
+- You can run multiple containers with the same hostname and droxy will use `roundrobin` to distribute the traffic between them .
+- You can use wildcards with hostnames for both `DROXY_HOST` and `DROXY-LETSENCRYPT`.
+- It caches Let'sEncrypt certs in the current working directory under `./droxy-certs/`, you can change when starting as following `./droxy --certs-dir=/path/to/custom/dir`.
+- You can change the default listening ports for both `80` and `443` `./droxy --http=:8080 --https=:44303`
+
+# Installing Source
 ```bash
-$ droxy &
-$ docker run --name example2.localhost -d -p 8081:81 -v /some/content:/usr/share/nginx/html:ro -d nginx
-$ curl localhost -H "Host: example2.localhost:81"
+$ go get -u github.com/alash3al/droxy
+$ go install github.com/alash3al/droxy
+$ droxy --help
 ```
-** any error will break the request and return 503
