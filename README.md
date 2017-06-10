@@ -31,7 +31,7 @@ What is `DROXY_HOST` and `DROXY_LETSENCRYPT` ?
 - You can specifiy whether to use `http` or `https` when connecting with the backend `DROXY_HOST=host1.com,https://host2.com`.
 - You can choose the backend port (docker private port) to be used for each hostname `DROXY_HOST=host1.com,host2.com:8080`
 - You can run multiple containers with the same hostname and droxy will use `roundrobin` to distribute the traffic between them .
-- You can use wildcards with hostnames for both `DROXY_HOST` and `DROXY-LETSENCRYPT`.
+- You can use wildcards with hostnames for both `DROXY_HOST` and `DROXY_LETSENCRYPT`.
 - It caches Let'sEncrypt certs in the current working directory under `./droxy-certs/`, you can change when starting as following `./droxy --certs-dir=/path/to/custom/dir`.
 - You can change the default listening ports for both `80` and `443` `./droxy --http=:8080 --https=:44303`
 
