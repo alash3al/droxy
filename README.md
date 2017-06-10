@@ -35,7 +35,7 @@ What is `DROXY_HOST` and `DROXY_LETSENCRYPT` ?
 - It caches Let'sEncrypt certs in the current working directory under `./droxy-certs/`, you can change when starting as following `./droxy --certs-dir=/path/to/custom/dir`.
 - You can change the default listening ports for both `80` and `443` `./droxy --http=:8080 --https=:44303`
 
-# Installing Source
+# Installing From Source
 ```bash
 $ go get -u github.com/alash3al/droxy
 $ go install github.com/alash3al/droxy
