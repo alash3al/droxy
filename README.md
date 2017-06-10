@@ -2,7 +2,7 @@
 A transparent standalone http reverse proxy for docker containers .
 
 # Download
-- For [Windows 64bit](https://droxy.alash3al.xyz/dl/v2/windows/droxy.exe) or [Linux 64bit](https://droxy.alash3al.xyz/dl/v2/linux/droxy) .
+- [Goto releases](https://github.com/alash3al/droxy/releases/tag/v2.0).
 - Then open your `terminal` or `CMD` .
 
 # Usage
