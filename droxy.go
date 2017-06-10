@@ -73,6 +73,7 @@ func listenAndServeAutoCert() error {
 	}
 	s := &http.Server{
 		Addr:      *HTTPS_ADDR,
+		Handler:   http.HandlerFunc(handler),
 		TLSConfig: &tls.Config{GetCertificate: m.GetCertificate},
 	}
 	return s.ListenAndServeTLS("", "")
